@@ -1,60 +1,61 @@
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
-const ObjectID = mongodb.ObjectID;
+const { MongoClient, ObjectID } = require('mongodb');
 
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'simple-task-manager';
 
+// const id = new ObjectID();
+// console.log(id.id.length);
+// console.log(id.getTimestamp());
+
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
     if (error) {
         return console.log('Unable to connect to database!');
-    } 
-    
+    }
+
     const db = client.db(databaseName);
 
-    // db.collection('users').insertOne({
-    //     name: 'Salim',
-    //     age: 22
-    // }, (error, result)=>{
-    //     if(error){
-    //         return console.error('Unable to insert document.');
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID("5d8a627ac1b3402860c2cf1d")
+    // },{
+    //     $inc: {
+    //         age: -1,
+    //     }
+    // }).then(result => {
+    //     console.log(result);
+    // }).catch(error=> {
+    //     console.log(error)
+    // })
+
+    // db.collection('users').findOne({ name: 'Dula' }, (error, user) => {
+    //     if (error) {
+    //         console.log('Could not fetched data');
     //     }
 
-    //     console.log(result.ops);
-    // });
-
-    // db.collection('users').insertMany([
     //     {
-    //         name: 'Sagor',
-    //         age: 17
-    //     },
-    //     {
-    //         name: 'Dola',
-    //         age: 9
+    //         !user ? console.log('No user entry') : console.log(user);
     //     }
-    // ], (error,result)=>{
-    //     if(error){
-    //         return console.log('Unable to insert data');
-    //     }
+    // })
 
-    //     console.log(result.ops);
-    // });
-
-    // db.collection('task').insertMany([
-    //     {
-    //         description: 'Clean the house',
+    // db.collection('task').findOne({_id: new ObjectID("5d8b9c345e13b530f8f6f72d")}, (error, task)=>{
+    //     console.log(task);
+    // })
+    // db.collection('task').updateMany({
+    //     completed: false
+    // }, {
+    //     $set: {
     //         completed: true
-    //     },{
-    //         description: 'Renew inspection',
-    //         completed: false
-    //     },{
-    //         description: 'Pot plants',
-    //         completed: false
     //     }
-    // ], (error, result)=>{
-    //     if(error){
-    //         console.log('Unable to insert Task!');
-    //     }
-    //     console.log(result.ops);
-    // });
+    // }).then(result => {
+    //     console.log(result.modifiedCount);
+    // }).catch(error => {
+    //     console.log(error);
+    // })
+
+    db.collection('users').deleteMany({
+        age: 22
+    }).then(result=>{
+        console.log(result);
+    }).catch(error=>{
+        console.log(error);
+    })
 });
